@@ -1,0 +1,35 @@
+server:
+  port: 8080
+
+
+internal.lb.uri: http://localhost
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: employees
+          # uri: ${internal.lb.uri}:9000
+          uri: http://employeesse:9000
+          predicates:
+            - Path=/api/employees**
+          filters:
+            - RewritePath=/(?<path>.*), /$\{path}
+        - id: customers
+          uri: http://customerse:9001
+          predicates:
+            - Path=/api/customers**
+          filters:
+            - RewritePath=/(?<path>.*), /$\{path}
+        - id: suppliers
+          uri: http://suppliersse:9002
+          predicates:
+            - Path=/api/suppliers**
+          filters:
+            - RewritePath=/(?<path>.*), /$\{path}
+        - id: webapp
+          # uri: ${internal.lb.uri}:9003
+          uri: http://webappse:9003
+          predicates:
+            - Path=/**
+          filters:
+            - RewritePath=/(?<path>.*), /$\{path}

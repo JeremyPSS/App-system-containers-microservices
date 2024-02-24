@@ -1,0 +1,33 @@
+version: '3.1'
+
+networks:
+  my_network:
+    driver: bridge
+
+services:
+
+  db:
+    container_name: container_mariadb_system
+    image: 1fd841edaad7
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_USER: root
+      MARIADB_DATABASE: system
+    ports:
+      - 3306:3306
+    volumes:
+      - ./data:/var/lib/mysql
+    networks:
+      - my_network
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - my_network
+    depends_on:
+        - db
+

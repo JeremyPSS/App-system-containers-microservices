@@ -1,0 +1,80 @@
+version: '3.8'
+
+networks:
+  my_network:
+    driver: bridge
+
+services:
+  db:
+    container_name: container_mariadb_system
+    image: system_mysql:latest
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_USER: root
+      MARIADB_DATABASE: system
+    ports: 
+      - 3306:3306
+    volumes:
+      - ./data:/var/lib/mysql
+    networks:
+      - my_network
+
+  adminer:
+    image: adminer:latest
+    restart: always
+    ports:
+      - 8282:8080
+    networks:
+      - my_network
+    depends_on:
+      - db
+
+  webappse:
+    image: jeremypss/webapp:5.0
+    ports:
+      - 9003:9003
+    networks:
+      - my_network
+
+  employeesse:
+    image: jeremypss/employees:5.3
+    ports:
+      - 9000:9000
+    networks:
+      - my_network
+    depends_on:
+      - db
+
+  customerse:
+    image: jeremypss/customers:6.0
+    ports:
+      - 9001:9001
+    networks:
+      - my_network
+    depends_on:
+      - db
+
+  suppliersse:
+    image: jeremypss/suppliers:6.0
+    ports:
+      - 9002:9002
+    networks:
+      - my_network
+    depends_on:
+      - db
+
+  gatewayse:
+    image: jeremypss/gateway:6.0
+    ports:
+      - 8080:8080
+    networks:
+      - my_network
+    depends_on:
+      - suppliersse
+      - customerse
+      - employeesse
+      - db
+      - webappse
+  
+  

@@ -1,0 +1,20 @@
+5 microservicios
+
+servicios:puertos
+
+employees: 9000
+customers:9001
+suppliers: 9002
+webapp: 9003
+
+gateway: por defecto toma el puerto 8080, se ingresa con localhost:8080 en navegadores.
+
+La base de datos se llama system. El backup se llama system se encuentran las tablas y los datos ya ingresados como prueba de funcionamiento.
+
+El puerto de la BD es 3306.
+Si en caso es un puerto diferente cambiaren el archivo application.properties
+
+src/main/resources/application.properties
+
+Ahí se configura los puertos que se levanta para el servicio en el que se encuentra. y ademas la conexion a la BD (system).
+
