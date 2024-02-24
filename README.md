@@ -17,6 +17,7 @@
   Then **Logout** on your linux machine
 
 - Run `docker-compose up -d` on your `docker-compose.yml` ubication
+  - > Also you can `docker pull` each image from my [docker hub](https://hub.docker.com/u/jeremypss)
 - Open a browser and go to `http://localhost:8080`
 - To restore the data
   -  Go to `http://localhost:8282`
